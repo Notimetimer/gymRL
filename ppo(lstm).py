@@ -41,7 +41,7 @@ class Config:
         self.max_grad_norm = 0.5        # 梯度裁剪阈值
         self.anneal = False             # 是否退火
         self.device = 'cpu'
-        self.render_mode = 'human'
+        self.render_mode = 'rgb_array' # rgb_array 不可视化 human 可视化
 
 def layer_init(layer, std: float):
     if isinstance(layer, nn.Conv2d) or isinstance(layer, nn.Linear):
@@ -418,7 +418,7 @@ class PPOTrainer:
         assert self.num_sequences % self.cfg.batch_size == 0, \
             f"num_sequences ({self.num_sequences}) must be divisible by batch_size ({self.cfg.batch_size})"
 
-        self.env = gym.make(config.env_name)
+        self.env = gym.make(config.env_name, render_mode=config.render_mode)
         state_dim = self.env.observation_space.shape[0]
         action_dim = self.env.action_space.n
         
