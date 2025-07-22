@@ -41,6 +41,7 @@ class Config:
         self.max_grad_norm = 0.5        # 梯度裁剪阈值
         self.anneal = False             # 是否退火
         self.device = 'cpu'
+        self.render_mode = 'human'
 
 def layer_init(layer, std: float):
     if isinstance(layer, nn.Conv2d) or isinstance(layer, nn.Linear):
