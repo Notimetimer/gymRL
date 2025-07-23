@@ -299,7 +299,7 @@ class sLSTM(nn.Module):
 
     def forward(self, x, state=None):
         assert x.ndim == 3
-        if self.batch_first: x = x.transpose(0, 1)
+        if self.batch_first: x = x.transpose(0, 1) # 交换tensor的指定维度
         seq_len, batch_size, _ = x.size()
 
         if state is not None:
@@ -310,7 +310,7 @@ class sLSTM(nn.Module):
             assert state_num_layers == self.num_layers
             assert state_batch_size == batch_size
             assert state_input_size == self.input_size
-            state = state.transpose(0, 1)
+            state = state.transpose(0, 1) # 交换tensor的指定维度
         else:
             state = torch.zeros(self.num_layers, 4, batch_size, self.hidden_size, device=x.device)
 
@@ -324,8 +324,8 @@ class sLSTM(nn.Module):
 
         output = torch.stack(output)
         if self.batch_first:
-            output = output.transpose(0, 1)
-        state = tuple(state.transpose(0, 1))
+            output = output.transpose(0, 1) # 交换tensor的指定维度
+        state = tuple(state.transpose(0, 1)) # 交换tensor的指定维度
         return output, state
 
 class ActorCritic(nn.Module):
